@@ -1,7 +1,7 @@
 #!/usr/bin/env bash 
  
 ### ===================================================================
-### tron-script
+### tron-script : Help Info Only works on Linux (gnu-sed). 
 ###
 ### Usage:
 ###   start.sh <command> <args>
@@ -37,7 +37,6 @@ fi
 
 
 help() {
-	echo "/n Help Info Only works on Linux (gnu-sed). "
     sed -rn 's/^### ?//;T;p;' "$0"
 }
 
