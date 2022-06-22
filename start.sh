@@ -9,13 +9,13 @@
 ### Options:
 ###   <command>  	suport:
 ###		 - up, Kill and start a local network.				No args
-###		 - down, Kill the process. 							No args
-###		 - clean, delete related file. 						No args
+###		 - down, Kill the process. 				  	No args
+###		 - clean, delete related file. 			  		No args
 ###		 - headblock, Get headblock from chain.				No args
 ###		 - createaddr, create addr from chain.				No args
 ###		 - blockbynum, Get block from chain by num.			Args: bknum
-###		 - accountbyhex, Get account from chain by addr.	Args: Addr
-###		 - accountinfo, Get account info from chain.		Args: Addr
+###		 - accountbyhex, Get account from chain by addr.		Args: Addr
+###		 - accountinfo, Get account info from chain.			Args: Addr
 ###   <args>  
 ###   -h        	Show this message.
 ###   API Reference: https://cn.developers.tron.network/reference/wallet-getnowblock
@@ -37,7 +37,7 @@ fi
 
 
 help() {
-	echo "Help Info Only works on Linux (gnu-sed). "
+	echo "/n Help Info Only works on Linux (gnu-sed). "
     sed -rn 's/^### ?//;T;p;' "$0"
 }
 
