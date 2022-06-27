@@ -1,0 +1,17 @@
+<root level="TRACE">
+    <appender-ref ref="STDOUT"/>
+    <!-- <appender-ref ref="ASYNC"/> -->
+  </root>
+
+  <logger name="app" level="DEBUG"/>
+  <logger name="net" level="DEBUG"/>
+  <logger name="backup" level="DEBUG"/>
+  <logger name="discover" level="DEBUG"/>
+  <logger name="crypto" level="DEBUG"/>
+  <logger name="utils" level="DEBUG"/>
+  <logger name="actuator" level="DEBUG"/>
+  <logger name="API" level="DEBUG"/>
+  <logger name="witness" level="DEBUG"/>
+  <logger name="DB" level="DEBUG"/>
+  <logger name="capsule" level="DEBUG"/>
+  <logger name="VM" level="DEBUG"/>

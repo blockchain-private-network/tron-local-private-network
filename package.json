@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "tronweb": "^4.2.0"
+  },
+  "name": "tron-local",
+  "description": "## Prerequisite",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blockchain-private-network/tron-local-private-network.git"
+  },
+  "author": "blake",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blockchain-private-network/tron-local-private-network/issues"
+  },
+  "homepage": "https://github.com/blockchain-private-network/tron-local-private-network#readme"
+}

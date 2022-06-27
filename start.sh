@@ -8,14 +8,16 @@
 ###
 ### Options:
 ###   <command>  	suport:
-###		 - up, Kill and start a local network.				No args
+###		 - up/up2, Kill and start a local network.				No args
 ###		 - down, Kill the process. 				  	No args
 ###		 - clean, delete related file. 			  		No args
 ###		 - headblock, Get headblock from chain.				No args
 ###		 - createaddr, create addr from chain.				No args
+###		 - genaddr, generate addr from chain.				No args
 ###		 - blockbynum, Get block from chain by num.			Args: bknum
 ###		 - accountbyhex, Get account from chain by addr.		Args: Addr
 ###		 - accountinfo, Get account info from chain.			Args: Addr
+###		 - peercount, Get peer counts from chain.			No args
 ###   <args>  
 ###   -h        	Show this message.
 ###   API Reference: https://cn.developers.tron.network/reference/wallet-getnowblock
@@ -48,10 +50,22 @@ fi
 
 # Fuction Zone
 start_1_1_node() {
-	printf "\n* %s\n\n Kill last runing node and start a super node & a sync full node..." "$(date)"
+	printf "\n* %s\n\n Kill last runing node and start two super nodes & a sync full node..." "$(date)"
 	pgrep -f FullNode.jar | xargs kill
 	cd ./SR || exit
 	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar FullNode.jar  --witness  -c supernode.conf &
+	cd ../FullNode || exit 
+	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar ../SR/FullNode.jar  -c fullnode.conf &
+}
+
+# Now is testing ... (Todo be complated) 
+start_2_1_node() {
+	printf "\n* %s\n\n Kill last runing node and start two super nodes & a sync full node..." "$(date)"
+	pgrep -f FullNode.jar | xargs kill
+	cd ./SR || exit
+	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar FullNode.jar  --witness  -c supernode.conf &
+	cd ../SR-2 || exit 
+	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar ../SR/FullNode.jar  -c supernode-2.conf &
 	cd ../FullNode || exit 
 	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar ../SR/FullNode.jar  -c fullnode.conf &
 }
@@ -64,14 +78,19 @@ while [ -n "$1" ]; do
 			start_1_1_node
 			exit
 		;;
+		up2)
+			start_2_1_node
+				exit
+			;;
 		down)
 			echo 'kill node process'
 			pgrep -f FullNode.jar | xargs kill
 			exit
 			;;
 		clean)
-			echo "clean some file"
+			echo "clean all blockchain file & data"
 			rm -rf ./SR/logs; rm -rf ./SR/output-directory; 
+			rm -rf ./SR-2/logs; rm -rf ./SR-2/output-directory; 
 			rm -rf ./FullNode/logs; rm -rf ./FullNode/output-directory; 
 			exit
 		;;
@@ -96,6 +115,12 @@ while [ -n "$1" ]; do
 					--header 'Content-Type: application/json'
 			exit
 			;;
+		genaddr)
+			curl --request GET \
+						--url http://localhost:16667/wallet/generateaddress \
+						--header 'Accept: application/json' | jq
+			exit
+			;;
 		accountbyhex)
 			if [ -n "$2" ]; then
 				curl --request POST \
@@ -111,6 +136,10 @@ while [ -n "$1" ]; do
 		accountinfo)
 			curl --request GET --url http://localhost:16667/v1/accounts/"$2" \
 						--header 'Accept: application/json' | jq
+			exit  
+			;;
+		peercount)
+			curl -X POST 'localhost:50545/jsonrpc' --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":64}' | jq
 			exit  
 			;;
 		*)

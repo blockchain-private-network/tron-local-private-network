@@ -3,3 +3,4 @@ output-directory
 .vscode
 node_modules
 FullNode.jar
+.DS_Store
