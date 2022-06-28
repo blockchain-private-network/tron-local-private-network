@@ -1,6 +1,14 @@
+# IDE
+.vscode
+
+# program data Dir
 logs
 output-directory
-.vscode
+recv.logs
+
+# Dependent packages
 node_modules
+
+# build file
 FullNode.jar
 .DS_Store
