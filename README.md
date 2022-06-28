@@ -19,10 +19,12 @@ export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 
 ## Use Methods
 
-- For help info: `./start.sh -h`
-- Start one Super node & Sync node: `./start.sh up`
+- For help info: `./start.sh -h`.
+- Start one Super node & a sync node: `./start.sh up`.
+- Start two Super node & a sync node: `./start.sh up2`.
 - JS SDK，please check [jsclient](./jsclient)
 - More Command support, please refer to [wallet-cli](https://github.com/tronprotocol/wallet-cli)
+- Have funning by this. 😄
 
 ## Reference
 

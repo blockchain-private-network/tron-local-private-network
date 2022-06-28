@@ -17,6 +17,7 @@
 ###		 - blockbynum, Get block from chain by num.			Args: bknum
 ###		 - accountbyhex, Get account from chain by addr.		Args: Addr
 ###		 - accountinfo, Get account info from chain.			Args: Addr
+###		 - listwits, Get witnesses info from chain.			No args
 ###		 - peercount, Get peer counts from chain.			No args
 ###   <args>  
 ###   -h        	Show this message.
@@ -53,7 +54,7 @@ start_1_1_node() {
 	printf "\n* %s\n\n Kill last runing node and start two super nodes & a sync full node..." "$(date)"
 	pgrep -f FullNode.jar | xargs kill
 	cd ./SR || exit
-	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar FullNode.jar  --witness  -c supernode.conf &
+	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar FullNode.jar  --witness --es -c supernode.conf &
 	cd ../FullNode || exit 
 	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar ../SR/FullNode.jar  -c fullnode.conf &
 }
@@ -63,9 +64,9 @@ start_2_1_node() {
 	printf "\n* %s\n\n Kill last runing node and start two super nodes & a sync full node..." "$(date)"
 	pgrep -f FullNode.jar | xargs kill
 	cd ./SR || exit
-	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar FullNode.jar  --witness  -c supernode.conf &
+	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar FullNode.jar  --witness --es -c supernode.conf &
 	cd ../SR-2 || exit 
-	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar ../SR/FullNode.jar  -c supernode-2.conf &
+	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar ../SR/FullNode.jar --witness -c supernode-2.conf &
 	cd ../FullNode || exit 
 	java -Xmx6g -XX:+HeapDumpOnOutOfMemoryError -jar ../SR/FullNode.jar  -c fullnode.conf &
 }
@@ -138,6 +139,13 @@ while [ -n "$1" ]; do
 						--header 'Accept: application/json' | jq
 			exit  
 			;;
+		listwits)
+			curl --request GET \
+					--url http://localhost:16667/wallet/listwitnesses \
+					--header 'Accept: application/json' | jq
+	 		exit 
+			;;
+		# RPC interative
 		peercount)
 			curl -X POST 'localhost:50545/jsonrpc' --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":64}' | jq
 			exit  

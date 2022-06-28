@@ -13,3 +13,4 @@ var tronWeb = new TronWeb({
 // Addr: TPL66VK2gCXNCD7EJg9pgJRfqcRazjhUZY
 // HexAddr: 41928c9af0651632157ef27a2cf17ca72c575a4d21
 console.log(tronWeb.address.toHex("TN3zfjYUmMFK3ZsHSsrdJoNRtGkQmZLBLz"));
+console.log(tronWeb.toHex("http://Test.org"));
