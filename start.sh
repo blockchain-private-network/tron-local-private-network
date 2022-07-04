@@ -18,6 +18,7 @@
 ###		 - accountbyhex, Get account from chain by addr.		Args: Addr
 ###		 - accountinfo, Get account info from chain.			Args: Addr
 ###		 - listwits, Get witnesses info from chain.			No args
+###		 - witcounts, Get witness count from chain.			No args
 ###		 - peercount, Get peer counts from chain.			No args
 ###   <args>  
 ###   -h        	Show this message.
@@ -143,6 +144,12 @@ while [ -n "$1" ]; do
 			curl --request GET \
 					--url http://localhost:16667/wallet/listwitnesses \
 					--header 'Accept: application/json' | jq
+	 		exit 
+			;;
+		witcounts)
+			curl --request GET \
+					--url http://localhost:16667/wallet/listwitnesses \
+					--header 'Accept: application/json' | grep -o 'address' | wc -l
 	 		exit 
 			;;
 		# RPC interative
