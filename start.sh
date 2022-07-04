@@ -20,6 +20,7 @@
 ###		 - listwits, Get witnesses info from chain.			No args
 ###		 - witcounts, Get witness count from chain.			No args
 ###		 - peercount, Get peer counts from chain.			No args
+###		 - ethsync, Get syncing state from chain.			No args
 ###   <args>  
 ###   -h        	Show this message.
 ###   API Reference: https://cn.developers.tron.network/reference/wallet-getnowblock
@@ -155,6 +156,10 @@ while [ -n "$1" ]; do
 		# RPC interative
 		peercount)
 			curl -X POST 'localhost:50545/jsonrpc' --data '{"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":64}' | jq
+			exit  
+			;;
+		ethsync)
+			curl -X POST 'localhost:50545/jsonrpc' --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":64}' | jq
 			exit  
 			;;
 		*)
