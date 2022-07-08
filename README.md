@@ -16,7 +16,7 @@ export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 - Notice
   - cos FullNode.jar is sigle file bigger more 100M, so need yourself complie.
   - And copy FullNode.jar to SR directory.
-  - The [dist](./dist) directory is build file of tronweb that extend some self-defined functions.
+  - The [dist](./dist) directory contain build files of tronweb that extend some self-defined functions.
 
 ## Use Methods
 
