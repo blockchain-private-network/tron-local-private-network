@@ -16,7 +16,9 @@
 ###		 - genaddr, generate addr from chain.				No args
 ###		 - blockbynum, Get block from chain by num.			Args: bknum
 ###		 - accountbyhex, Get account from chain by addr.		Args: Addr
+###		 - trxbyid, Get transaction from chain by txid.			Args: Addr
 ###		 - accountinfo, Get account info from chain.			Args: Addr
+###		 - nodeinfo, Get node info from chain.				No args
 ###		 - listwits, Get witnesses info from chain.			No args
 ###		 - witcounts, Get witness count from chain.			No args
 ###		 - peercount, Get peer counts from chain.			No args
@@ -136,8 +138,25 @@ while [ -n "$1" ]; do
 			fi
 			exit
 			;;
+		trxbyid)
+			if [ -n "$2" ]; then
+				curl --request POST \
+						--url http://localhost:16667/wallet/gettransactionbyid \
+						--header 'Accept: application/json' \
+						--header 'Content-Type: application/json' \
+						--data "{\"value\": \"$2\", \"visible\": true }" | jq
+			else
+				echo 'must pointed the query block number.'
+			fi
+			exit
+			;;
 		accountinfo)
 			curl --request GET --url http://localhost:16667/v1/accounts/"$2" \
+						--header 'Accept: application/json' | jq
+			exit  
+			;;
+		nodeinfo)
+			curl --request GET --url http://localhost:16667/wallet/getnodeinfo \
 						--header 'Accept: application/json' | jq
 			exit  
 			;;
