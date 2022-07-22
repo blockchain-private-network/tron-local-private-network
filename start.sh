@@ -13,6 +13,7 @@
 ###		 - clean, delete related file. 			  		No args
 ###		 - headblock, Get headblock from chain.				No args
 ###		 - createaddr, create addr from chain.				No args
+###		 - transferbyPrv, create addr from chain.			No args
 ###		 - genaddr, generate addr from chain.				No args
 ###		 - blockbynum, Get block from chain by num.			Args: bknum
 ###		 - accountbyhex, Get account from chain by addr.		Args: Addr
@@ -119,7 +120,19 @@ while [ -n "$1" ]; do
 					--header 'Accept: application/json' \
 					--header 'Content-Type: application/json'
 			exit
-			;;
+			;; 
+		transferbyPrv)
+			if [ -n "$2" ]; then
+				curl --request POST \
+						--url http://localhost:16667/wallet/easytransferbyprivate \
+						--header 'Accept: application/json' \
+						--header 'Content-Type: application/json' \
+						--data "{\"privateKey\": \"$2\", \"toAddress\": \"$3\", \"amount\": $4}" | jq
+			else
+				echo 'must pointed the "prvkey hexaddr amount".'
+			fi
+			exit
+			;;	
 		genaddr)
 			curl --request GET \
 						--url http://localhost:16667/wallet/generateaddress \
@@ -134,7 +147,7 @@ while [ -n "$1" ]; do
 						--header 'Content-Type: application/json' \
 						--data "{\"address\": \"$2\"}" | jq
 			else
-				echo 'must pointed the query block number.'
+				echo 'must pointed the query address.'
 			fi
 			exit
 			;;
