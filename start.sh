@@ -16,7 +16,7 @@
 ###		 - transferbyPrv, create addr from chain.			No args
 ###		 - genaddr, generate addr from chain.				No args
 ###		 - blockbynum, Get block from chain by num.			Args: bknum
-###		 - accountbyhex, Get account from chain by addr.		Args: Addr
+###		 - accountbyaddr, Get account from chain by addr.		Args: Addr
 ###		 - trxbyid, Get transaction from chain by txid.			Args: Addr
 ###		 - accountinfo, Get account info from chain.			Args: Addr
 ###		 - nodeinfo, Get node info from chain.				No args
@@ -24,6 +24,7 @@
 ###		 - witcounts, Get witness count from chain.			No args
 ###		 - peercount, Get peer counts from chain.			No args
 ###		 - ethsync, Get syncing state from chain.			No args
+###		 - contractinfo, Get contract info from chain.			No args
 ###   <args>  
 ###   -h        	Show this message.
 ###   API Reference: https://cn.developers.tron.network/reference/wallet-getnowblock
@@ -151,6 +152,18 @@ while [ -n "$1" ]; do
 			fi
 			exit
 			;;
+		accountbyaddr)
+			if [ -n "$2" ]; then
+				curl --request POST \
+						--url http://localhost:16667/wallet/getaccount \
+						--header 'Accept: application/json' \
+						--header 'Content-Type: application/json' \
+						--data "{\"address\": \"$2\", \"visible\": true}" | jq
+			else
+				echo 'must pointed the query address.'
+			fi
+			exit
+			;;
 		trxbyid)
 			if [ -n "$2" ]; then
 				curl --request POST \
@@ -192,6 +205,33 @@ while [ -n "$1" ]; do
 			;;
 		ethsync)
 			curl -X POST 'localhost:50545/jsonrpc' --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":64}' | jq
+			exit  
+			;;
+		contractinfo)
+			curl --request POST \
+					--url http://localhost:16667/wallet/getcontract \
+					--header 'Accept: application/json' \
+					--header 'Content-Type: application/json' \
+					--data "{\"value\": \"$2\", \"visible\": true }"  | jq
+			exit  
+			;;
+		deployCon)
+			curl --request POST \
+					--url https://api.shasta.trongrid.io/wallet/deploycontract \
+					--header 'Accept: application/json' \
+					--header 'Content-Type: application/json' \
+					--data '
+				{
+					"owner_address": "4145557499cc19ff0de13c62b7e38e6253778f1316",
+					"abi": "[{\"constant\":false,\"inputs\":[{\"name\":\"key\",\"type\":\"uint256\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"set\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"key\",\"type\":\"uint256\"}],\"name\":\"get\",\"outputs\":[{\"name\":\"value\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}]",
+					"bytecode": "608060405234801561001057600080fd5b5060de8061001f6000396000f30060806040526004361060485763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416631ab06ee58114604d5780639507d39a146067575b600080fd5b348015605857600080fd5b506065600435602435608e565b005b348015607257600080fd5b50607c60043560a0565b60408051918252519081900360200190f35b60009182526020829052604090912055565b600090815260208190526040902054905600a165627a7a72305820fdfe832221d60dd582b4526afa20518b98c2e1cb0054653053a844cf265b25040029",
+					"fee_limit": 1000000,
+					"origin_energy_limit": 100000,
+					"name": "SomeContract2",
+					"call_value": 0,
+					"consume_user_resource_percent": 100
+				}
+				'
 			exit  
 			;;
 		*)
