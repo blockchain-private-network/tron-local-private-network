@@ -18,4 +18,3 @@ setTimeout(async function() {
         var signedVoteP1Txn = await tronWeb.trx.sign(unsignedVoteP1Txn, "da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0");
         var rtn1 = await tronWeb.trx.sendRawTransaction(signedVoteP1Txn);
     }, 1000)
-

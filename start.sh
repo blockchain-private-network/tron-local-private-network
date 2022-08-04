@@ -18,6 +18,7 @@
 ###		 - blockbynum, Get block from chain by num.			Args: bknum
 ###		 - accountbyaddr, Get account from chain by addr.		Args: Addr
 ###		 - trxbyid, Get transaction from chain by txid.			Args: Addr
+###		 - trxinfobyid, Get transaction info  by txid.			Args: Addr
 ###		 - accountinfo, Get account info from chain.			Args: Addr
 ###		 - nodeinfo, Get node info from chain.				No args
 ###		 - listwits, Get witnesses info from chain.			No args
@@ -176,6 +177,18 @@ while [ -n "$1" ]; do
 			fi
 			exit
 			;;
+		trxinfobyid)
+			if [ -n "$2" ]; then
+				curl --request POST \
+						--url http://localhost:16667/wallet/gettransactioninfobyid \
+						--header 'Accept: application/json' \
+						--header 'Content-Type: application/json' \
+						--data "{\"value\": \"$2\", \"visible\": true }" | jq
+			else
+				echo 'must pointed the query block number.'
+			fi
+			exit
+			;;
 		accountinfo)
 			curl --request GET --url http://localhost:16667/v1/accounts/"$2" \
 						--header 'Accept: application/json' | jq
@@ -212,7 +225,7 @@ while [ -n "$1" ]; do
 					--url http://localhost:16667/wallet/getcontract \
 					--header 'Accept: application/json' \
 					--header 'Content-Type: application/json' \
-					--data "{\"value\": \"$2\", \"visible\": true }"  | jq
+					--data "{\"value\": \"$2\", \"visible\": \"$3\" }"  | jq
 			exit  
 			;;
 		deployCon)
