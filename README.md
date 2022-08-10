@@ -23,6 +23,7 @@ export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
 - For help info: `./start.sh -h`.
 - Start one Super node & a sync node: `./start.sh up`.
 - Start two Super node & a sync node: `./start.sh up2`.
+- Exec `node ./jsclient/activation_proposals.js`. Up date with tron mainnet proposals activate.  
 - JS SDK，please check [jsclient](./jsclient)
 - More Command support, please refer to [wallet-cli](https://github.com/tronprotocol/wallet-cli)
 - Have funning by this. 😄
