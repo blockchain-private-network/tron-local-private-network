@@ -1,6 +1,7 @@
-var TronWeb = require('./dist/TronWeb.node');
+var TronWeb = require('tronweb');
+// var TronWeb = require('./dist/TronWeb.node');
 var tronWeb = new TronWeb({
-        fullNode: 'http://localhost:16667',
+        fullNode: 'http://localhost:16677',
         solidityNode: 'http://localhost:16668',
         privateKey: 'da146374a75310b9666e834ee4ad0866d6f4035967bfc76217c5a495fff9f0d0'
     })
@@ -14,7 +15,7 @@ console.log(tronWeb.address.toHex("TMtpn4MruoDKXLbts5VwrUyFa3CX3dSVsz"));
 console.log(tronWeb.address.fromHex("4188ced060fad1699c9491800a3c45b4000700f3ed"));
 
 async function trsfer() { console.log(await tronWeb.trx.sendTransaction("TN3zfjYUmMFK3ZsHSsrdJoNRtGkQmZLBLz", 200)) };
-// trsfer()
+trsfer()
 tronWeb.trx.getAccount('TN3zfjYUmMFK3ZsHSsrdJoNRtGkQmZLBLz').then(result => console.log(result))
 
 // Send muti-trxs (self-defined function)
@@ -64,20 +65,20 @@ async function deploy_contract(){
 
 async function triggercontract(){
     try {
-        let instance = await tronWeb.contract().at('TKkxR2KHv2mge9Xf3xdjSJoHdMABvjqLUd');
+        let instance = await tronWeb.contract().at('TRzuaNFFy3iv6tWBJDHuqE7WpKXbvgYoC9');
         // let res = await instance.set("TGHozqzkDmRrC1ZRbnEzGp48hfx9vskPQm", ["TMtpn4MruoDKXLbts5VwrUyFa3CX3dSVsz", "TMtpn4MruoDKXLbts5VwrUyFa3CX3dSVsz"]).send({
-        // let res = await instance.set("1", "2").send({
-        //     feeLimit:100_000_000,
-        //     callValue:0,
-        //     shouldPollResponse:true
-        // });
-        // console.log(res);
+        let res = await instance.set("5", "2").send({
+            feeLimit:100_000_000,
+            callValue:0,
+            shouldPollResponse:true
+        });
+        console.log(res);
         // console.log(JSON.stringify(instance))
-        let result = await instance.get(1).call();
-        console.log(JSON.stringify(result))
+        // let result = await instance.get(1).call();
+        // console.log(JSON.stringify(result))
 
     } catch (error) {
         console.log(error);
     }
 }
-triggercontract();
+// triggercontract();

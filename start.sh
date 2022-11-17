@@ -129,7 +129,7 @@ while [ -n "$1" ]; do
 						--url http://localhost:16667/wallet/easytransferbyprivate \
 						--header 'Accept: application/json' \
 						--header 'Content-Type: application/json' \
-						--data "{\"privateKey\": \"$2\", \"toAddress\": \"$3\", \"amount\": $4}" | jq
+						--data "{\"privateKey\": \"$2\", \"toAddress\": \"$3\", \"assetId\": \"$4\",\"amount\": $5}" | jq
 			else
 				echo 'must pointed the "prvkey hexaddr amount".'
 			fi
